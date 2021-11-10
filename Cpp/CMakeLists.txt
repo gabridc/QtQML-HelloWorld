@@ -5,10 +5,10 @@ if(LINUX)
     set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
 endif()
 
-
+if(WIN)
     set(CMAKE_C_COMPILER "C:/msys64/mingw64/bin/gcc.exe")
     set(CMAKE_CXX_COMPILER "C:/msys64/mingw64/bin/g++.exe")
-
+endif()
 
 project(Broker)
 
@@ -26,7 +26,7 @@ if(LINUX)
     set(Qt5_DIR "~/Qt/5.15.2/")
 endif()
 
-
+if(WIN)
     set(CMAKE_PREFIX_PATH "D:/Qt/5.15.2/mingw81_64/lib/cmake/Qt5")
     set(Qt5_DIR "D:/Qt/5.15.2/mingw81_64/bin")
     set(Qt5Core_VERSION "5.15")
@@ -39,7 +39,7 @@ endif()
     set(Qt5Widgets_DIR "D:/Qt/5.15.2/mingw81_64/lib/cmake/Qt5Widgets")
     set(Qt5Sql_DIR "D:/Qt/5.15.2/mingw81_64/lib/cmake/Qt5Sql")
     set(Qt5NetworkAuth_DIR "D:/Qt/5.15.2/mingw81_64/lib/cmake/Qt5NetworkAuth")    
-
+endif()
 
 if(ANDROID)
     set(ANDROID_ABIS "armeabi-v7a")
@@ -91,5 +91,6 @@ if(ANDROID)
 endif()
 
 
-
+if(WIN)
 target_link_libraries(Hello Qt5::Quick Qt5::Qml Qt5::Widgets)
+endif()
