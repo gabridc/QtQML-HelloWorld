@@ -1,8 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-    </qresource>
-
-    <qresource prefix="/assets">
+        <file alias="main">main.qml</file>
     </qresource>
 </RCC>
