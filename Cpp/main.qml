@@ -14,6 +14,16 @@ Window {
     title: qsTr("Hello")
     
     signal resize(var w, var c)
+
+    Component.onCompleted:{
+        headerModel.append({"colName": "Nombre", "index": 0})
+        headerModel.append({"colName": "Apellidos", "index":1})
+        headerModel.append({"colName": "Mail", "index":2})
+
+        dataModel.append({"dataTxt": "Gabriel", "index" : 0})
+        dataModel.append({"dataTxt": "Domínguez", "index" : 1})
+        dataModel.append({"dataTxt": "g@gmail.com", "index": 2})
+    }
     
     Row
     {
@@ -31,95 +41,49 @@ Window {
         spacing: 10
        
 
-        Text{
-            id: nombre
-            width: 150;
-            text: "Nombre"
+         Repeater {
+            model: ListModel{id:headerModel}
+            delegate: Text{
+                id: col
+                width: 150;
+                height: 30
+                text: colName
+                property int index_: index 
+                ToolSeparator{ 
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    orientation: Qt.Vertical
 
-            ToolSeparator{ 
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                orientation: Qt.Vertical
 
-
-            }
-
-            
-            MouseArea{
-            anchors.fill: nombre
-            property int lastX: 0
-            property int minimum: 0
-            onPositionChanged: {
-                if(minimum != 0) //Forzar que primero se tenga que hacer click
-                {
-                    if(mouse.x  > minimum )
-                    {
-                        console.log(mouse.x - lastX)
-                        nombre.width += mouse.x - lastX
-                        mainWindow.resize(mouse.x - lastX, 0 )
+                }
+                MouseArea{
+                    anchors.fill: col
+                    property int lastX: 0
+                    property int minimum: 0
+                    onPositionChanged: {
+                        if(minimum != 0) //Forzar que primero se tenga que hacer click
+                        {
+                            console.log(col.index_);
+                            if(mouse.x  > minimum )
+                            {
+                                col.width += mouse.x - lastX
+                                mainWindow.resize(mouse.x - lastX, col.index_ )
+                            }
+                            lastX = mouse.x
+                        }
                     }
-                    lastX = mouse.x
+                    onClicked: {
+                        if(minimum == 0)
+                        {
+                            minimum = mouse.x
+                        }
+                        lastX = mouse.x
+                        console.log("Clicked "  + (mouse.x - lastX))
+                    
+                    }
                 }
-            }
-            onClicked: {
-                if(minimum == 0)
-                {
-                    minimum = mouse.x
-                }
-                lastX = mouse.x
-                console.log("Clicked "  + (mouse.x - lastX))
-            
-            }
             }
         }
-        Text{
-            id:apellidos
-            width: 150;
-            text: "Apellidos"
-
-            MouseArea{
-            anchors.fill: apellidos
-            property int lastX: 0
-             property int minimum: 0
-               onPositionChanged: {
-                if(mouse.x  >minimum )
-                {
-                    apellidos.width += mouse.x - lastX
-                    mainWindow.resize(mouse.x - lastX, 0 )
-                }
-                lastX = mouse.x
-            }
-            onClicked: {
-                if(minimum == 0)
-                {
-                    minimum = mouse.x
-                }
-                lastX = mouse.x
-            
-            }
-            }
-        }
-        Text{
-            id: mail
-            width: 150;
-            
-            text: "Mail"
-
-
-            MouseArea{
-                anchors.fill: mail
-                property int lastX: 0
-                 property int minimum: 0
-                onPositionChanged: {
-                    mail.width += mouse.x - lastX
-                    mainWindow.resize(mouse.x - lastX, 2)
-                    lastX = mouse.x
-                }
-                onClicked: console.log("Clicked")
-            }
-        }
-
-
     }
 
     
@@ -128,7 +92,7 @@ Window {
         id: data
         
         anchors.top: header.top
-        anchors.topMargin: 20
+        anchors.topMargin: 50
 
         anchors.left: header.left
         anchors.leftMargin: 0
@@ -138,35 +102,21 @@ Window {
 
          spacing: 10
 
-        Text{
-            id: col0
-            width: 150; 
-            text: "Luis"
-            property int col: 0
-            
-            Connections {
-                target: mainWindow
-                onResize: if(c == col0.col) col0.width += w
+         Repeater {
+            model: ListModel{id: dataModel}
+            delegate: Text{
+                id: col0
+                width: 150; 
+                text: dataTxt
+                property int index_: index
+                
+                Connections {
+                    target: mainWindow
+                    onResize:{ if(c == index_) col0.width += w }
+                }
             }
-        }
-        Text{
-            id:col1
-            width: 150; text: "García"
-            property int col: 1
-            Connections {
-                target: mainWindow
-                onResize: if(c == col1.col) col1.width += w
-            }
-        }
-        Text{
-            id:col2
-            property int col: 2
-            width: 150; text: "l@gmail.com"
-            Connections {
-                target: mainWindow
-                onResize: if(c == col2.col) col2.width += w
-            }
-        }
+         }
+
     }
 
 }
