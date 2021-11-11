@@ -20,9 +20,14 @@ Window {
         headerModel.append({"colName": "Apellidos", "index":1})
         headerModel.append({"colName": "Mail", "index":2})
 
-        dataModel.append({"dataTxt": "Gabriel", "index" : 0})
-        dataModel.append({"dataTxt": "Domínguez", "index" : 1})
-        dataModel.append({"dataTxt": "g@gmail.com", "index": 2})
+        rowsModel.append({"dataM": [{"dataTxt": "Gabriel Ángel", "index" : 0}, 
+                            {"dataTxt": "Domínguez Camarero", "index" : 1},
+                            {"dataTxt": "gabrieldominguezcamarero@gmail.com", "index": 2}]})
+
+        rowsModel.append({"dataM": [{"dataTxt": "Gabriel Ángel", "index" : 0}, 
+                            {"dataTxt": "Domínguez Camarero", "index" : 1},
+                            {"dataTxt": "gabrieldominguezcamarero@gmail.com", "index": 2}]})
+
     }
     
     Row
@@ -87,10 +92,7 @@ Window {
     }
 
     
-
-    Row{
-        id: data
-        
+    Column {
         anchors.top: header.top
         anchors.topMargin: 50
 
@@ -99,24 +101,41 @@ Window {
         
         anchors.right: header.right
         anchors.rightMargin: 0
-
-         spacing: 10
+        spacing: 5
 
          Repeater {
-            model: ListModel{id: dataModel}
-            delegate: Text{
-                id: col0
-                width: 150; 
-                text: dataTxt
-                property int index_: index
-                
-                Connections {
-                    target: mainWindow
-                    onResize:{ if(c == index_) col0.width += w }
+            model: ListModel{id: rowsModel}
+            delegate: Row{
+                id: data
+                property var data_: dataM
+                spacing: 10
+
+                Component.onCompleted:{
+                     console.log(data_.count)
+                    for(var i = 0; i < data_.count; i++)
+                    {
+                        dataModel.append({"dataTxt": data_.get(i)['dataTxt'], "index": data_.get(i)['index']})
+                    }
+                }
+
+                Repeater {
+                    model: ListModel{id: dataModel}
+                    delegate: Text{
+                        id: col0
+                        width: 150; 
+                        text: dataTxt
+                        property int index_: index
+                        clip: true
+                        
+                        Connections {
+                            target: mainWindow
+                            onResize:{ if(c == index_) col0.width += w }
+                        }
+
+                       Rectangle{anchors.fill: parent; color: "lightblue"}
+                    }
                 }
             }
-         }
-
+        }
     }
-
 }
