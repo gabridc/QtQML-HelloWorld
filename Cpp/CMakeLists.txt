@@ -65,6 +65,7 @@ find_package(Qt5 REQUIRED COMPONENTS Qml Quick Widgets)
 include_directories(D:/Qt/5.15.2/mingw81_64/include/)
 include_directories(D:/Qt/5.15.2/mingw81_64/include/QtWidgets)
 include_directories(.)
+include_directories(./Models)
 
 qt5_add_resources(RESOURCES qml.qrc)
 
@@ -73,12 +74,27 @@ if(ANDROID)
             main.cpp
             Hello.cpp
             Hello.h
+            CellModel.h
+            CellModel.cpp
+            ForeignMode.cpp
+            ForeignMode.h
+            CellModelFactory.h
+            CellModelFactory.cpp
             ${RESOURCES})
 else()
 add_executable(Hello
         main.cpp
         Hello.cpp 
         Hello.h
+        Models/CellModel.h
+        Models/CellModel.cpp
+        Models/RowModel.h
+        Models/RowModel.cpp        
+        Models/TableModel.h
+        Models/TableModel.cpp        
+        Models/ForeignModel.cpp
+        Models/ForeignModel.h
+        Models/CellModelFactory.h
         ${RESOURCES})
 endif()
 
