@@ -63,3 +63,13 @@ QHash<int, QByteArray> RowModel::getRoleNames(void) const
 {
     return roleNames_;
 }
+
+CellModel* RowModel::getCell(int index)
+{
+    return cells_.at(index);
+}
+
+void RowModel::print(void)
+{
+    std::cout << "Row" << std::endl;
+}

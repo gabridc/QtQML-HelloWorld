@@ -22,7 +22,6 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<TextModel>("es.broker", 1, 0, "TextModel", "Operation sholud not be created in QMl");
 
     TableModel tableModel;
-    
 
     
    ///HEADER

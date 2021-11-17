@@ -109,7 +109,9 @@ Window {
             {
                 id: cellMA
                 anchors.fill: parent
-                onClicked: console.log(index + " " + index)
+                onClicked: {
+                    tableModel.getCell(index).print();
+                }
             }
         }
     }

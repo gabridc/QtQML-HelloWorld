@@ -50,6 +50,19 @@ QVariant TableModel::data(const QModelIndex &index, int role) const
     }
 }
 
+std::tuple<int, int> TableModel::getIndex(int index)
+{
+    auto row = index % 10000;
+    auto column = (index - row ) / 10000;
+    return std::tuple<int, int>(row, column);
+}
+
+CellModel* TableModel::getCell(int index)
+{
+    auto row = std::get<0>(getIndex(index));
+    auto column = std::get<1>(getIndex(index));
+    return rows_[row]->cells()[column];
+}
 
 bool TableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {

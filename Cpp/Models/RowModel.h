@@ -7,6 +7,7 @@
 #include <QVariant>
 #include "CellModel.h"
 #include <QAbstractListModel>
+#include <iostream>
 
 class RowModel : public QAbstractListModel 
 {
@@ -27,6 +28,11 @@ public:
     QList<CellModel*> cells(void);
     void setCells (QList<CellModel*> cells);
     QHash<int, QByteArray> getRoleNames(void) const;
+
+public slots:
+    void print(void);
+    CellModel* getCell(int index);
+
 
 signals:
     void cellsChanged(bool foo);
