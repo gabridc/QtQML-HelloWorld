@@ -32,6 +32,10 @@ public:
         return { {Qt::DisplayRole, "display"} };
     }
 
+public slots:
+    std::tuple<int, int> getIndex(int index);
+    CellModel* getCell(int index);
+
 signals:
     void rowsChanged(bool foo);
 
