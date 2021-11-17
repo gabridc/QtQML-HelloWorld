@@ -5,6 +5,15 @@ int RowModel::rowCount(const QModelIndex &parent) const
 {
     if ( parent.isValid() )
         return 0;
+
+    return 1;
+}
+
+int RowModel::columnCount(const QModelIndex &parent) const
+{
+    if ( parent.isValid() )
+        return 0;
+
     return cells_.size();
 }
 
@@ -14,11 +23,8 @@ QHash<int, QByteArray> RowModel::roleNames() const {
 
 void RowModel::add(int index, const QString& columnName, CellModel* cell)
 {
-    std::cout << "ADD Cell " << index << columnName.toStdString() << std::endl;
     cells_.push_back(cell);
     roleNames_.insert(index, columnName.toUtf8());
-    std::cout << cells_.count() << std::endl;
-
 }
 
 QList<CellModel*> RowModel::cells(void)

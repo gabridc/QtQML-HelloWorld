@@ -6,9 +6,9 @@
 #include <QMap>
 #include <QVariant>
 #include "CellModel.h"
-#include <QAbstractTableModel>
+#include <QAbstractListModel>
 
-class RowModel : public QAbstractTableModel
+class RowModel : public QAbstractListModel 
 {
 
     Q_OBJECT
@@ -16,7 +16,8 @@ class RowModel : public QAbstractTableModel
 
 public:
     RowModel(QObject* parent = 0){};
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int rowCount(const QModelIndex &parent) const;
+    int columnCount(const QModelIndex &parent) const;
     QHash<int, QByteArray> roleNames() const;
 
 

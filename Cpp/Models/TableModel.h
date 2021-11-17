@@ -11,8 +11,7 @@ class TableModel : public QAbstractTableModel
 
 public:
     TableModel(QObject *parent = 0){};
-    //Expone el nombre de los atributos y los relaciona entre QML y C++
-    QHash<int, QByteArray> roleNames() const;
+
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
 
@@ -25,6 +24,13 @@ public:
 
     // Esta función permite modificar los parametros de la clase Operation desde QML
     bool setData(const QModelIndex &index, const QVariant &value, int role);
+
+    
+    //Expone el nombre de los atributos y los relaciona entre QML y C++
+    QHash<int, QByteArray> roleNames() const
+    {
+        return { {Qt::DisplayRole, "display"} };
+    }
 
 signals:
     void rowsChanged(bool foo);

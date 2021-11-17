@@ -7,11 +7,17 @@ void TableModel::add(RowModel* row)
     beginInsertRows(QModelIndex(), rowCount(), rowCount());   // kindly provided by superclass
     rows_.push_back(row);
 
-   if(roleNames_.count() == 0)
-        roleNames_ = row->getRoleNames();
+   //if(roleNames_.count() == 0)
+      //  roleNames_ = row->getRoleNames();
     endInsertRows();                                          // kindly provided by superclass
 
-    std::cout << rows_.size() << std::endl;
+    if(columns_.size() == 0)
+    {
+        beginInsertColumns(QModelIndex(), columnCount(), columnCount());   // kindly provided by superclass
+        for(auto c : row->cells())
+            columns_.push_back(c->getColumn());
+        endInsertColumns(); 
+    }
 }
 
 
@@ -26,22 +32,21 @@ int TableModel::rowCount(const QModelIndex &parent) const
     return rows_.count();
 }
 
-int TableModel::rowCount(const QModelIndex &parent) const
+int TableModel::columnCount(const QModelIndex &parent) const
 {
     if ( parent.isValid() )
         return 0;
 
-    return rows_.count();
+    return columns_.count();
 }
 
 
 
 QVariant TableModel::data(const QModelIndex &index, int role) const
 {
-    std::cout << index.row() << std::endl;
     if (index.isValid())
     {
-        return rows_.at(index.row())->data(index,   1);
+        return rows_[index.row()]->cells().at(index.column())->getColumn();
     }
 }
 
@@ -50,8 +55,4 @@ bool TableModel::setData(const QModelIndex &index, const QVariant &value, int ro
 {
     if (index.isValid()) 
         return rows_.at(index.row())->setData(value, role);
-}
-
-QHash<int, QByteArray> TableModel::roleNames() const {
-    return roleNames_;
 }

@@ -26,28 +26,26 @@ int main(int argc, char *argv[])
 
     
    ///HEADER
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 10000; i++)
     {
         RowModel *rowModel = new RowModel();
         CellModelFactory *cell = new CellModelFactory("TEXT");
         cell->getInstance()->setTable("SW");
         cell->getInstance()->setColumn("id");
-        rowModel->add(1, "id", cell->getInstance());
+        rowModel->add(0, "id", cell->getInstance());
         CellModelFactory *cell1 = new CellModelFactory("TEXT");
-        cell->getInstance()->setTable("SW");
-        cell->getInstance()->setColumn("name");
-        rowModel->add(2, "name", cell1->getInstance());  
+        cell1->getInstance()->setTable("SW");
+        cell1->getInstance()->setColumn("name");
+        rowModel->add(1, "name", cell1->getInstance());  
         CellModelFactory *cell2= new CellModelFactory("TEXT");
-        cell->getInstance()->setTable("SW");
-        cell->getInstance()->setColumn("phone");
-        rowModel->add(3, "phone", cell1->getInstance());  
+        cell2->getInstance()->setTable("SW");
+        cell2->getInstance()->setColumn("phone");
+        rowModel->add(2, "phone", cell2->getInstance());  
         CellModelFactory *cell3 = new CellModelFactory("TEXT");
-        cell->getInstance()->setTable("SW");
-        cell->getInstance()->setColumn("mail");
-        rowModel->add(4, "mail", cell1->getInstance());  
+        cell3->getInstance()->setTable("SW");
+        cell3->getInstance()->setColumn("mail");
+        rowModel->add(3, "mail", cell3->getInstance());  
         tableModel.add(rowModel);
-
-        
     }
 
 

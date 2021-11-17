@@ -18,7 +18,7 @@ Window {
     Component.onCompleted:{
     }
     
-    Row
+    /*Row
     {
         id: header
 
@@ -77,44 +77,39 @@ Window {
                 }
             }
         }
-    }
+    }*/
 
     
-    Column {
-        anchors.top: header.top
+    TableView {
+        anchors.fill: parent
+        anchors.top: mainWindow.top
         anchors.topMargin: 50
 
-        anchors.left: header.left
-        anchors.leftMargin: 0
+        anchors.left: mainWindow.left
+        anchors.leftMargin: 50
         
-        anchors.right: header.right
-        anchors.rightMargin: 0
-        spacing: 5
+        columnSpacing: 1
+        rowSpacing: 1
+        model: tableModel
+        interactive: true
+        flickableDirection : Flickable.VerticalFlick
+        delegate: Rectangle{
+            implicitWidth: 200
+            implicitHeight: 50
+            Text{
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                text: display
+                property int index_: index
+                clip: true
+            }
 
-         Repeater {
-            model: tableModel.rows
-            delegate: Row{
-                id: data
-                property var data_: ""
-                spacing: 10
-
-                Repeater {
-                    model: tableModel
-                    delegate: Text{
-                        id: col0
-                        width: 150; 
-                        text: ""
-                        property int index_: index
-                        clip: true
-                        
-                        Connections {
-                            target: mainWindow
-                            onResize:{ if(c == index_) col0.width += w }
-                        }
-
-                       Rectangle{anchors.fill: parent; color: "lightblue"}
-                    }
-                }
+            MouseArea
+            {
+                id: cellMA
+                anchors.fill: parent
+                onClicked: console.log(index + " " + index)
             }
         }
     }
