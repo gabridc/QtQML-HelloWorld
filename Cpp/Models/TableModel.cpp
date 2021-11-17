@@ -1,5 +1,5 @@
 #include <TableModel.h>
-
+#include <iostream>
 
 
 void TableModel::add(RowModel* row)
@@ -7,9 +7,11 @@ void TableModel::add(RowModel* row)
     beginInsertRows(QModelIndex(), rowCount(), rowCount());   // kindly provided by superclass
     rows_.push_back(row);
 
-    if(roleNames_.count() == 0)
+   if(roleNames_.count() == 0)
         roleNames_ = row->getRoleNames();
     endInsertRows();                                          // kindly provided by superclass
+
+    std::cout << rows_.size() << std::endl;
 }
 
 
@@ -24,12 +26,23 @@ int TableModel::rowCount(const QModelIndex &parent) const
     return rows_.count();
 }
 
+int TableModel::rowCount(const QModelIndex &parent) const
+{
+    if ( parent.isValid() )
+        return 0;
+
+    return rows_.count();
+}
+
 
 
 QVariant TableModel::data(const QModelIndex &index, int role) const
 {
+    std::cout << index.row() << std::endl;
     if (index.isValid())
-        return rows_.at(index.row())->data(role);
+    {
+        return rows_.at(index.row())->data(index,   1);
+    }
 }
 
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <QApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include "Hello.h"
 #include "TableModel.h"
 #include "RowModel.h"
@@ -24,45 +25,37 @@ int main(int argc, char *argv[])
     
 
     
-
+   ///HEADER
     for(int i = 0; i < 10; i++)
     {
         RowModel *rowModel = new RowModel();
-        for(int j = 0; j < 5; j++)
-        {
-            CellModelFactory *cell = new CellModelFactory("TEXT");
-            cell->getInstance()->setTable("SW");
-            cell->getInstance()->setColumn("ID");
-            rowModel->add("ID " + QString::number(j), cell->getInstance());  
-        }
-
-        std::cout << rowModel->getRoleNames().count() << std::endl;
-
+        CellModelFactory *cell = new CellModelFactory("TEXT");
+        cell->getInstance()->setTable("SW");
+        cell->getInstance()->setColumn("id");
+        rowModel->add(1, "id", cell->getInstance());
+        CellModelFactory *cell1 = new CellModelFactory("TEXT");
+        cell->getInstance()->setTable("SW");
+        cell->getInstance()->setColumn("name");
+        rowModel->add(2, "name", cell1->getInstance());  
+        CellModelFactory *cell2= new CellModelFactory("TEXT");
+        cell->getInstance()->setTable("SW");
+        cell->getInstance()->setColumn("phone");
+        rowModel->add(3, "phone", cell1->getInstance());  
+        CellModelFactory *cell3 = new CellModelFactory("TEXT");
+        cell->getInstance()->setTable("SW");
+        cell->getInstance()->setColumn("mail");
+        rowModel->add(4, "mail", cell1->getInstance());  
         tableModel.add(rowModel);
+
+        
     }
-
-    
-
-    auto rows = tableModel.getRows();
-    int i = 0;
-    for(auto r : rows)
-    {
-        std::cout << i << std::endl;
-        auto roles = r->getRoleNames();
-            for(auto c : roles)
-                std::cout << c.toStdString() << std::endl;
-        i++;
-    }
-    
-
-
-
 
 
     QApplication app(argc, argv);
     qmlRegisterType<Hello>("es.hello", 1, 0, "HelloImp");
 
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("tableModel", &tableModel);
     const QUrl url(QStringLiteral("qrc:/main"));
     engine.load(url);
 

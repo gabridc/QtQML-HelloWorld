@@ -1,16 +1,50 @@
 #include "RowModel.h"
 #include <iostream>
 
-void RowModel::add(const QString& columnName, CellModel* cell)
+int RowModel::rowCount(const QModelIndex &parent) const
 {
+    if ( parent.isValid() )
+        return 0;
+    return cells_.size();
+}
 
-    cells_.insert(columnName, cell);
+QHash<int, QByteArray> RowModel::roleNames() const {
+    return roleNames_;
+}
+
+void RowModel::add(int index, const QString& columnName, CellModel* cell)
+{
+    std::cout << "ADD Cell " << index << columnName.toStdString() << std::endl;
+    cells_.push_back(cell);
+    roleNames_.insert(index, columnName.toUtf8());
     std::cout << cells_.count() << std::endl;
 
 }
 
-QVariant RowModel::data(int role) const
+QList<CellModel*> RowModel::cells(void)
 {
+    return cells_;
+}
+
+
+void RowModel::setCells (QList<CellModel*> cells)
+{
+    cells_ = cells;
+}
+
+QVariant RowModel::data(const QModelIndex &index, int role) const
+{
+    if (index.isValid())
+    {
+        auto roles = RowModel::getRoleNames();
+        for(auto roleID :  roles.keys())
+        {
+            if(roleID == role)
+            {
+                return cells_[index.row()]->getColumn();
+            }
+        }
+    }
     return QVariant();
 }
 
@@ -21,14 +55,5 @@ bool RowModel::setData(const QVariant &value, int role) const
 
 QHash<int, QByteArray> RowModel::getRoleNames(void) const
 {
-    QHash<int, QByteArray> roleNames;
-    int index = 1;
-
-    for(auto k : cells_.keys())
-    {
-        std::cout << k.toStdString() << std::endl;
-        roleNames.insert(index, k.toUtf8());
-    }
-
-    return roleNames;
+    return roleNames_;
 }

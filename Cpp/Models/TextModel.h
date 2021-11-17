@@ -20,6 +20,7 @@ public:
 
     void setCurrentValue(void);
     void setOldValue(void);
+    
 
 private:
     QString currentValue_;

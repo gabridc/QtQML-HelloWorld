@@ -16,18 +16,6 @@ Window {
     signal resize(var w, var c)
 
     Component.onCompleted:{
-        headerModel.append({"colName": "Nombre", "index": 0})
-        headerModel.append({"colName": "Apellidos", "index":1})
-        headerModel.append({"colName": "Mail", "index":2})
-
-        rowsModel.append({"dataM": [{"dataTxt": "Gabriel Ángel", "index" : 0}, 
-                            {"dataTxt": "Domínguez Camarero", "index" : 1},
-                            {"dataTxt": "gabrieldominguezcamarero@gmail.com", "index": 2}]})
-
-        rowsModel.append({"dataM": [{"dataTxt": "Gabriel Ángel", "index" : 0}, 
-                            {"dataTxt": "Domínguez Camarero", "index" : 1},
-                            {"dataTxt": "gabrieldominguezcamarero@gmail.com", "index": 2}]})
-
     }
     
     Row
@@ -47,19 +35,19 @@ Window {
        
 
          Repeater {
-            model: ListModel{id:headerModel}
+            model: tableModel
             delegate: Text{
                 id: col
                 width: 150;
                 height: 30
-                text: colName
+                text: name
                 property int index_: index 
+
+                Component.onCompleted: console.log(tableModel.rowCount())
                 ToolSeparator{ 
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     orientation: Qt.Vertical
-
-
                 }
                 MouseArea{
                     anchors.fill: col
@@ -104,26 +92,18 @@ Window {
         spacing: 5
 
          Repeater {
-            model: ListModel{id: rowsModel}
+            model: tableModel.rows
             delegate: Row{
                 id: data
-                property var data_: dataM
+                property var data_: ""
                 spacing: 10
 
-                Component.onCompleted:{
-                     console.log(data_.count)
-                    for(var i = 0; i < data_.count; i++)
-                    {
-                        dataModel.append({"dataTxt": data_.get(i)['dataTxt'], "index": data_.get(i)['index']})
-                    }
-                }
-
                 Repeater {
-                    model: ListModel{id: dataModel}
+                    model: tableModel
                     delegate: Text{
                         id: col0
                         width: 150; 
-                        text: dataTxt
+                        text: ""
                         property int index_: index
                         clip: true
                         
