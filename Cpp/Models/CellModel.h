@@ -9,31 +9,20 @@ class CellModel : public QObject
 {
 
 Q_OBJECT
-Q_PROPERTY(int row READ row WRITE setRow)
-Q_PROPERTY(QString display READ display)
-
 
 public:
-    
-    
-
-    CellModel(QObject *parent = 0){row_ = 19;};
-    ~CellModel(void) = default;
-
-    CellModel& operator=(const CellModel& c);
-
     void setTable(const QString& table);
     void setColumn(const QString& column);
     QString getColumn(void) const;
     QString getTable(void) const;
+    virtual void setCurrentValue(const QString& currentValue) = 0;
 
-    int row(void) const;
-    void setRow(int row);
-    QString display(void);
+
 
 public slots:
     void print(void);
-
+    virtual QString display(void) = 0;
+    virtual QString currentValue(void) = 0;
 
 private:
     QString table_;

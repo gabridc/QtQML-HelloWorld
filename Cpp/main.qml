@@ -100,7 +100,7 @@ Window {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 10
-                text: display
+                text: tableModel.getCell(index).currentValue()
                 property int index_: index
                 clip: true
             }
@@ -110,7 +110,7 @@ Window {
                 id: cellMA
                 anchors.fill: parent
                 onClicked: {
-                    tableModel.getCell(index).print();
+                    console.log(tableModel.getCell(index).display())
                 }
             }
         }

@@ -12,9 +12,9 @@ public:
 
     CellModelFactory(const QString type, QObject *object=0)
     {
-        if("FOREIGN KEY")
+        if(type  == "FOREIGN KEY")
             cell = new ForeignModel();
-        else if("TEXT")
+        else if(type == "TEXT")
             cell = new TextModel();
     }
 

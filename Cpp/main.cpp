@@ -31,18 +31,22 @@ int main(int argc, char *argv[])
         CellModelFactory *cell = new CellModelFactory("TEXT");
         cell->getInstance()->setTable("SW");
         cell->getInstance()->setColumn("id");
+        cell->getInstance()->setCurrentValue("69");
         rowModel->add(0, "id", cell->getInstance());
         CellModelFactory *cell1 = new CellModelFactory("TEXT");
         cell1->getInstance()->setTable("SW");
         cell1->getInstance()->setColumn("name");
+        cell1->getInstance()->setCurrentValue("Gabriel");
         rowModel->add(1, "name", cell1->getInstance());  
         CellModelFactory *cell2= new CellModelFactory("TEXT");
         cell2->getInstance()->setTable("SW");
         cell2->getInstance()->setColumn("phone");
+        cell2->getInstance()->setCurrentValue("564135");
         rowModel->add(2, "phone", cell2->getInstance());  
         CellModelFactory *cell3 = new CellModelFactory("TEXT");
         cell3->getInstance()->setTable("SW");
         cell3->getInstance()->setColumn("mail");
+        cell3->getInstance()->setCurrentValue("g@gmail.com");
         rowModel->add(3, "mail", cell3->getInstance());  
         tableModel.add(rowModel);
     }
