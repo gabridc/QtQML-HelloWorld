@@ -2,6 +2,9 @@
 #include <QList>
 #include <QObject>
 #include "RowModel.h"
+#include "CellModel.h"
+#include "CellModelfactory.h"
+#include "TextModel.h"
 
 class TableModel : public QAbstractTableModel
 {
