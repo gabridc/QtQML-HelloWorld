@@ -69,6 +69,10 @@ engine.load(url);
 - En el código QML
 
 ```
+import QtQuick 2.12
+import QtQuick.Window 2.12
+import QtQuick.Dialogs 1.3
+import QtQuick.Controls 2.1
 
 TableView {
     anchors.fill: parent
